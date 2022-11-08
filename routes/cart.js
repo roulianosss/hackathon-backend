@@ -22,9 +22,12 @@ router.get('/add/:id', function(req, res, next) {
     
 });
 
-router.delete('/', (req, res) => {
+router.delete('/delete', (req, res) => {
   Cart.deleteMany({}).then(data => res.json({data}))
 })
 
+router.delete('/delete/:id', (req, res) => {
+  Cart.deleteOne({ _id: req.params.id }).then(data => res.json({data}))
+})
 
 module.exports = router;
