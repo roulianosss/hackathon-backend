@@ -4,14 +4,12 @@ const Trip = require('../models/trips')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  Trip.find().then(allTrips => res.send(allTrips))
-  ;
+  Trip.find().then(allTrips => res.send(allTrips));
 });
 
-router.get('/new', (req, res) => {
+router.post('/new', (req, res) => {
     Trip.find().then(allTrips => {
-        console.log(allTrips[0].date.toLocaleString())
-        const result = allTrips.filter(trip => trip.departure === req.body.departure && trip.arrival === req.body.arrival && trip.date.toLocaleString().split(' ')[0] === req.body.date )
+        const result = allTrips.filter(trip => trip.departure === req.body.departure && trip.arrival === req.body.arrival && trip.date.toISOString().split('T')[0] === req.body.date )
         res.json(result)
     })
 })
