@@ -1,13 +1,30 @@
 var express = require('express');
 var router = express.Router();
+const Cart = require('../models/carts')
+const Trip = require('../models/trips')
 
-/* GET users listing. */
+/* GET cart listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  Cart.find().then(allCartItems => res.send(allCartItems));
 });
 
-router.post('/add', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/add/:id', function(req, res, next) {
+  Trip.findById(req.params.id).then(item => {
+    console.log(item)
+    const newItem = new Cart({
+      departure: item.departure,
+      arrival: item.arrival,
+      date: item.date,
+      price: item.price
+    })
+    newItem.save().then(data => res.json(data))
+  })
+    
 });
+
+router.delete('/', (req, res) => {
+  Cart.deleteMany({}).then(data => res.json({data}))
+})
+
 
 module.exports = router;
