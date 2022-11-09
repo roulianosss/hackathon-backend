@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/new', (req, res) => {
     Trip.find().then(allTrips => {
-        const result = allTrips.filter(trip => trip.departure === req.body.departure && trip.arrival === req.body.arrival && trip.date.toISOString().split('T')[0] === req.body.date )
+        const result = allTrips.filter(trip => trip.departure.toLowerCase() === req.body.departure.toLowerCase() && trip.arrival.toLowerCase() === req.body.arrival.toLowerCase() && trip.date.toISOString().split('T')[0] === req.body.date )
         res.json(result)
     })
 })
