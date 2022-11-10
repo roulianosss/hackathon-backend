@@ -10,6 +10,7 @@ const usersRouter = require("./routes/users");
 const bookingsRouter = require("./routes/bookings");
 const cartRouter = require("./routes/cart");
 const tripsRouter = require("./routes/trips");
+const checkoutRouter = require("./routes/checkout");
 
 const app = express();
 
@@ -27,5 +28,7 @@ app.use("/users", usersRouter);
 app.use("/trips", tripsRouter);
 app.use("/booking", bookingsRouter);
 app.use("/cart", cartRouter);
+app.use("/checkout", checkoutRouter);
+
 
 module.exports = app;

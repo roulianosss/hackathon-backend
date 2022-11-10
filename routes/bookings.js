@@ -5,7 +5,7 @@ const Booking = require('../models/bookings')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  Booking.find().then(data => res.json(data ))
+  Booking.find().then(data => res.json(data))
 });
 
 router.get('/add', function(req, res, next) {
@@ -17,16 +17,14 @@ router.get('/add', function(req, res, next) {
         date: item.date,
         price: item.price
       })
-      newItem.save().then(data => console.log(data))
-
+      newItem.save().then()
     })
-
     Cart.deleteMany({}).then(data => res.json(data))
 
   })
 });
 
-router.delete('/delete', (req, res) => {
+router.delete('/', (req, res) => {
   Booking.deleteMany({}).then(data => res.json(data))
 })
 

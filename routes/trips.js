@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Trip = require('../models/trips')
+const moment = require('moment');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -8,9 +9,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/new', (req, res) => {
-    Trip.find().then(allTrips => {
-        const result = allTrips.filter(trip => trip.departure.toLowerCase() === req.body.departure.toLowerCase() && trip.arrival.toLowerCase() === req.body.arrival.toLowerCase() && trip.date.toISOString().split('T')[0] === req.body.date )
-        res.json(result)
+    Trip.find({ 
+      departure: {$regex: new RegExp(req.body.departure, "i")}, 
+      arrival: {$regex: new RegExp(req.body.arrival, "i")},
+      date: {$gte: moment(req.body.date).startOf("day"), $lte: moment(req.body.date).endOf("day")}
+    }).then(allTrips => {
+        res.json(allTrips)
     })
 })
 

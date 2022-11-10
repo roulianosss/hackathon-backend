@@ -5,12 +5,11 @@ const Trip = require('../models/trips')
 
 /* GET cart listing. */
 router.get('/', function(req, res, next) {
-  Cart.find().then(allCartItems => res.send(allCartItems));
+  Cart.find().then(allCartItems => res.json(allCartItems));
 });
 
 router.get('/add/:id', function(req, res, next) {
   Trip.findById(req.params.id).then(item => {
-    console.log(item)
     const newItem = new Cart({
       departure: item.departure,
       arrival: item.arrival,
@@ -22,11 +21,11 @@ router.get('/add/:id', function(req, res, next) {
     
 });
 
-router.delete('/delete', (req, res) => {
+router.delete('/', (req, res) => {
   Cart.deleteMany({}).then(data => res.json({data}))
 })
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   Cart.deleteOne({ _id: req.params.id }).then(data => res.json({data}))
 })
 
